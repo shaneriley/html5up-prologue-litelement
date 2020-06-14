@@ -1,51 +1,27 @@
+import { html } from 'lit-element';
 import SiteHeader from './src/site-header.js';
+import PrologueIntro from './src/prologue-intro.js';
+import ProloguePortfolio from './src/prologue-portfolio.js';
+import PrologueAbout from './src/prologue-about.js';
+import PrologueContact from './src/prologue-contact.js';
+import pageData from './src/page-data.js';
 
 customElements.define('site-header', SiteHeader);
+customElements.define('prologue-intro', PrologueIntro);
+customElements.define('prologue-portfolio', ProloguePortfolio);
+customElements.define('prologue-about', PrologueAbout);
+customElements.define('prologue-contact', PrologueContact);
 
 {
-  const siteHeader = document.querySelector('site-header');
+  const elements = {
+    'site-header': pageData.siteHeader,
+    'prologue-intro': pageData.intro,
+    'prologue-portfolio': pageData.portfolio,
+    'prologue-about': pageData.about,
+    'prologue-contact': pageData.contact,
+  };
 
-  Object.assign(siteHeader, {
-    name: 'Shane Riley',
-    title: 'Software Architect',
-    avatarSrc: 'images/avatar.jpg',
-    navItems: [{
-      text: 'Intro',
-      href: '#top',
-      icon: 'fa-home'
-    }, {
-      text: 'Portfolio',
-      href: '#portfolio',
-      icon: 'fa-th'
-    }, {
-      text: 'About Me',
-      href: '#about',
-      icon: 'fa-user'
-    }, {
-      text: 'Contact',
-      href: '#contact',
-      icon: 'fa-envelope'
-    }],
-    socialItems: [{
-      text: 'Twitter',
-      href: '#',
-      icon: 'fa-twitter'
-    }, {
-      text: 'Facebook',
-      href: '#',
-      icon: 'fa-facebook-f'
-    }, {
-      text: 'GitHub',
-      href: '#',
-      icon: 'fa-github'
-    }, {
-      text: 'Dribbble',
-      href: '#',
-      icon: 'fa-dribbble'
-    }, {
-      text: 'Email',
-      href: '#',
-      icon: 'fa-envelope'
-    }]
-  });
+  for (let selector in elements) {
+    Object.assign(document.querySelector(selector), elements[selector]);
+  }
 }
