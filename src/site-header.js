@@ -23,6 +23,43 @@ class NavLink extends LitElement {
   firstUpdated() {
     super.firstUpdated();
     $(this.querySelector('a')).scrolly();
+
+    this.setupScrollEX();
+  }
+
+  setupScrollEX() {
+    const $this = $(this.querySelector('a')),
+        id = $this.attr('href'),
+        $section = $(id);
+
+    if (!$section.length) { return; }
+
+    $section.scrollex({
+      mode: 'middle',
+      top: '-10vh',
+      bottom: '-10vh',
+      initialize: () => {
+        $section.addClass('inactive');
+      },
+      enter: () => {
+        const $nav_a = $('#nav a.active-locked');
+        $section.removeClass('inactive');
+        if (!$nav_a.length) {
+          this.setScrollPoint(id);
+        }
+        else if ($this.hasClass('active-locked')) {
+          $this.removeClass('active-locked');
+        }
+      }
+    });
+  }
+
+  setScrollPoint(target) {
+    this.dispatchEvent(new CustomEvent('setScrollPoint', {
+      detail: {
+        target
+      }
+    }));
   }
 
   handleClick(e) {
@@ -32,16 +69,13 @@ class NavLink extends LitElement {
     }
 
     e.preventDefault();
+    this.querySelector('a').classList.add('active-locked');
 
-    this.dispatchEvent(new CustomEvent('setScrollPoint', {
-      detail: {
-        target
-      }
-    }));
+    this.setScrollPoint(target);
   }
 
   get cssClass() {
-    return `scrolly${this.active ? ' active active-locked' : ''}`;
+    return `scrolly${this.active ? ' active' : ''}`;
   }
 
   render() {
@@ -82,6 +116,20 @@ export default class extends LitElement {
 
   createRenderRoot() {
     return this;
+  }
+
+  firstUpdated() {
+    $(this.querySelector('#header'))
+      .panel({
+        delay: 500,
+        hideOnClick: true,
+        hideOnSwipe: true,
+        resetScroll: true,
+        resetForms: true,
+        side: 'left',
+        target: $(document.body),
+        visibleClass: 'header-visible'
+      });
   }
 
   setScrollPoint({ detail }) {

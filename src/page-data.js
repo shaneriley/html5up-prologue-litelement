@@ -45,8 +45,8 @@ export default {
     }]
   },
   intro: {
-    title: html`Hi! I'm <strong>Prologue</strong>, a <a href="http://html5up.net/license">free</a> responsive<br />site template designed by <a href="http://html5up.net">HTML5 UP</a>.`,
-    copy: html`Ligula scelerisque justo sem accumsan diam quis<br />vitae natoque dictum sollicitudin elementum.`,
+    title: html`Hi! I'm <strong>Prologue</strong>, a <a href="http://html5up.net/license">free</a> responsive <br />site template designed by <a href="http://html5up.net">HTML5 UP</a>.`,
+    copy: html`Ligula scelerisque justo sem accumsan diam quis <br />vitae natoque dictum sollicitudin elementum.`,
     button: {
       href: '#portfolio',
       text: 'Magna Aliquam',
